@@ -1,0 +1,13 @@
+from pydantic import BaseModel
+from datetime import datetime
+
+class TransactionSchema(BaseModel):
+    date: datetime
+    weight: int
+    price: int
+    total: int
+    dealer_id: str
+    farmer_id: str
+
+    class Config:
+        orm_mode = True
