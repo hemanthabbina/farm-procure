@@ -5,12 +5,12 @@ import os
 
 
 # Load environment variables from a .env file or system environment variables
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./test3.db")
+#DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./test3.db")
+DATABASE_URL = "postgresql://procure:Farm1234$@farmdb.postgres.database.azure.com/procure"
 
 # Create the SQLAlchemy engine
 engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}  # This is required for SQLite
+    DATABASE_URL
 )
 
 # Create a configured "Session" class
