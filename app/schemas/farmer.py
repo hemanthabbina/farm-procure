@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class FarmerSchema(BaseModel):
-    id: str
+    id: int
     name: str
     mobile: str
 

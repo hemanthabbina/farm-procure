@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 class BankAccountSchema(BaseModel):
-    id: str
-    farmer_id: str
+    id: int
+    farmer_id: int
     bank_name: str
     branch: str
     account_number: str

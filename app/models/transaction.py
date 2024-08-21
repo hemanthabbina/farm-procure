@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy import UUID, Column, String, Integer, DateTime, ForeignKey
 from app.database.connection import Base
 
 class Transaction(Base):
@@ -8,5 +8,5 @@ class Transaction(Base):
     weight = Column(Integer)
     price = Column(Integer)
     total = Column(Integer)
-    dealer_id = Column(String, ForeignKey("dealers.id"))
-    farmer_id = Column(String, ForeignKey("farmers.id"))
+    dealer_id = Column(Integer, ForeignKey("dealers.id"))
+    farmer_id = Column(Integer, ForeignKey("farmers.id"))

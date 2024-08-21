@@ -3,17 +3,17 @@ from fastapi import HTTPException
 from app.models.dealer import Dealer
 from app.schemas.dealer import DealerSchema
 
-def get_dealer(db: Session, dealer_id: str):
+def get_dealer(db: Session, dealer_id: int):
     return db.query(Dealer).filter(Dealer.id == dealer_id).first()
 
 def create_dealer(db: Session, dealer: DealerSchema):
-    db_dealer = Dealer(id=dealer.id, name=dealer.name, address=dealer.address, mobile=dealer.mobile)
+    db_dealer = Dealer(name=dealer.name, address=dealer.address, mobile=dealer.mobile)
     db.add(db_dealer)
     db.commit()
     db.refresh(db_dealer)
     return db_dealer
 
-def update_dealer(db: Session, dealer_id: str, dealer: DealerSchema):
+def update_dealer(db: Session, dealer_id: int, dealer: DealerSchema):
     db_dealer = get_dealer(db, dealer_id)
     if not db_dealer:
         raise HTTPException(status_code=404, detail="Dealer not found")
@@ -24,7 +24,7 @@ def update_dealer(db: Session, dealer_id: str, dealer: DealerSchema):
     db.refresh(db_dealer)
     return db_dealer
 
-def delete_dealer(db: Session, dealer_id: str):
+def delete_dealer(db: Session, dealer_id: int):
     db_dealer = get_dealer(db, dealer_id)
     if not db_dealer:
         raise HTTPException(status_code=404, detail="Dealer not found")

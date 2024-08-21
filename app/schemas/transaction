@@ -6,8 +6,8 @@ class TransactionSchema(BaseModel):
     weight: int
     price: int
     total: int
-    dealer_id: str
-    farmer_id: str
+    dealer_id: int
+    farmer_id: int
 
     class Config:
         orm_mode = True

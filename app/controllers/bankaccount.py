@@ -3,17 +3,17 @@ from fastapi import HTTPException
 from app.models.bankaccount import BankAccount
 from app.schemas.bankaccount import BankAccountSchema
 
-def get_bankaccount(db: Session, bankaccount_id: str):
+def get_bankaccount(db: Session, bankaccount_id: int):
     return db.query(BankAccount).filter(BankAccount.id == bankaccount_id).first()
 
 def create_bankaccount(db: Session, bankaccount: BankAccountSchema):
-    db_bankaccount = BankAccount(id=bankaccount.id, farmer_id=bankaccount.farmer_id, bank_name=bankaccount.bank_name, branch=bankaccount.branch, account_number= bankaccount.account_number,ifsc_code=bankaccount.ifsc_code)
+    db_bankaccount = BankAccount(farmer_id=bankaccount.farmer_id, bank_name=bankaccount.bank_name, branch=bankaccount.branch, account_number= bankaccount.account_number,ifsc_code=bankaccount.ifsc_code)
     db.add(db_bankaccount)
     db.commit()
     db.refresh(db_bankaccount)
     return db_bankaccount
 
-def update_bankaccount(db: Session, id: str, bankaccount: BankAccountSchema):
+def update_bankaccount(db: Session, id: int, bankaccount: BankAccountSchema):
     db_bankaccount = get_bankaccount(db, id)
     if not db_bankaccount:
         raise HTTPException(status_code=404, detail="Bank Account not found")
@@ -24,7 +24,7 @@ def update_bankaccount(db: Session, id: str, bankaccount: BankAccountSchema):
     db.refresh(db_bankaccount)
     return db_bankaccount
 
-def delete_bankaccount(db: Session, id: str):
+def delete_bankaccount(db: Session, id: int):
     db_bankaccount = get_bankaccount(db, id)
     if not db_bankaccount:
         raise HTTPException(status_code=404, detail="Bank Account not found")

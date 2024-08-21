@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class FarmSchema(BaseModel):
-    id: str
+    id: int
     extent: int
     cocoa_plant_count: int
     year_planted: int

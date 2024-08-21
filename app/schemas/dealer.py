@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class DealerSchema(BaseModel):
-    id: str
+    id: int
     name: str
     address: str
     mobile: str

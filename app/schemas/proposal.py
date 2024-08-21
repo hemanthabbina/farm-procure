@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 class ProposalSchema(BaseModel):
-    id: str
-    farmer_id: str
+    id: int
+    farmer_id: int
     type: str
     weight: int
     quality: int
