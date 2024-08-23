@@ -6,6 +6,9 @@ from app.schemas.order import OrderSchema
 def get_order(db: Session, order_id: int):
     return db.query(Order).filter(Order.id == order_id).first()
 
+def get_orders(db: Session):
+    return db.query(Order).all()
+
 def create_order(db: Session, order: OrderSchema):
     db_order = Order(farmer_id=order.farmer_id, dealer_id= order.dealer_id, date=order.date, type=order.type, quantity=order.quantity, picture=order.picture, price=order.price, status=order.status)
     db.add(db_order)

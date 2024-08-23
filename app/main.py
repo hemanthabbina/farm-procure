@@ -1,8 +1,10 @@
 from fastapi import FastAPI
+from fastapi_pagination import add_pagination
 from app.database.connection import init_db
 from app.views import bankaccount, dealer, farmer, order
 
 app = FastAPI()
+#add_pagination(app)
 
 init_db()
 
