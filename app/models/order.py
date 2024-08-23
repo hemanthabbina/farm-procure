@@ -1,4 +1,4 @@
-from sqlalchemy import UUID, Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey
 from app.database.connection import Base
 
 class Order(Base):
@@ -13,4 +13,3 @@ class Order(Base):
     picture = Column(String)
     status = Column(String)
     price = Column(Integer)
-    status = Column(String)
