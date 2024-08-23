@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
 
 
 # Load environment variables from a .env file or system environment variables
@@ -30,7 +29,6 @@ def get_db():
 # Initialize the database
 def init_db():
     # Import all the models here so they are registered on the Base.metadata
-    from app.models import farmer, dealer, farm, proposal, transaction
     
     # Create all tables in the database
     Base.metadata.create_all(bind=engine)

@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from app.database.connection import init_db
-from app.views import bankaccount, dealer, farmer, proposal
-import uvicorn
+from app.views import bankaccount, dealer, farmer, order
 
 app = FastAPI()
 
@@ -11,4 +10,4 @@ app.include_router(farmer.router, prefix="/api/v1/farmers")
 app.include_router(dealer.router, prefix="/api/v1/dealers")
 app.include_router(bankaccount.router, prefix="/api/v1/bankaccounts")
 #app.include_router(farms.router, prefix="/api/v1/forms")
-app.include_router(proposal.router, prefix="/api/v1/proposals")
+app.include_router(order.router, prefix="/api/v1/orders")
