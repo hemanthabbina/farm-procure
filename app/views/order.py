@@ -15,9 +15,14 @@ def create_order_view(order: OrderSchema, db: Session = Depends(get_db)):
 
 
 
-@router.get("/", response_model=List[OrderSchema]) 
-def list_all_orders(db: Session = Depends(get_db)):
-    return order_controller.get_orders(db=db)
+@router.get("/farmer/{farmer_id}", response_model=List[OrderSchema]) 
+def list_all_orders(farmer_id: int, db: Session = Depends(get_db)):
+    return order_controller.get_farmer_orders(db=db, farmer_id=farmer_id)
+
+
+@router.get("/dealer/{dealer_id}", response_model=List[OrderSchema]) 
+def list_all_orders(dealer_id: int, db: Session = Depends(get_db)):
+    return order_controller.get_dealers_orders(db=db, dealer_id=dealer_id)
 
 @router.get("/{order_id}", response_model=OrderSchema)
 def read_order(order_id: int, db: Session = Depends(get_db)):

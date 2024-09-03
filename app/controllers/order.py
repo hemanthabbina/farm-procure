@@ -1,5 +1,8 @@
+from sqlalchemy import any_
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+from app.models.dealer import Dealer
+from app.models.farmer import Farmer
 from app.models.order import Order
 from app.schemas.order import OrderSchema
 
@@ -8,6 +11,18 @@ def get_order(db: Session, order_id: int):
 
 def get_orders(db: Session):
     return db.query(Order).all()
+
+def get_farmer_orders(db: Session, farmer_id: int):
+    return db.query(Order).filter(Order.farmer_id == farmer_id)
+
+def get_dealers_orders(db: Session, dealer_id: int):
+    print("get_dealers_orders")
+  #   assignments = db.query(Dealer).filter(Dealer.id == dealer_id).
+  #  assignment_list = list(Dealer.assignments).options(load_only("id")).\
+  #  print(assignment_list)
+ #   return db.query(Farmer, Order, Dealer).filter(Order.farmer_id == Farmer.id).filter(Farmer.pincode == assignment_list.index[0])
+    return db.query(Order).join(Farmer).join(Dealer).filter(Dealer.id == dealer_id).filter(Order.farmer_id == Farmer.id).filter(Farmer.pincode == any_(Dealer.assignments))
+
 
 def create_order(db: Session, order: OrderSchema):
     db_order = Order(farmer_id=order.farmer_id, dealer_id= order.dealer_id, date=order.date, type=order.type, quantity=order.quantity, picture=order.picture, price=order.price, status=order.status)

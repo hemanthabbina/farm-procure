@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
+from app.schemas.assignments import Assignment
 from app.schemas.dealer import DealerSchema
 from app.controllers import dealer as dealer_controller
 
@@ -16,6 +17,13 @@ def read_dealer(dealer_id: int, db: Session = Depends(get_db)):
     if db_dealer is None:
         raise HTTPException(status_code=404, detail="Dealer not found")
     return db_dealer
+
+@router.get("/{dealer_id}/assignments", response_model=list)
+def read_dealer(dealer_id: int, db: Session = Depends(get_db)):
+    db_dealer = dealer_controller.get_dealer(db, dealer_id=dealer_id)
+    if db_dealer is None:
+        raise HTTPException(status_code=404, detail="Dealer not found")
+    return db_dealer.assignments
 
 @router.put("/{dealer_id}", response_model=DealerSchema)
 def update_dealer_view(dealer_id: int, dealer: DealerSchema, db: Session = Depends(get_db)):

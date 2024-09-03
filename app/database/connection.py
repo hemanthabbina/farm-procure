@@ -9,7 +9,7 @@ DATABASE_URL = "postgresql://procure:Farm1234$@farmdb.postgres.database.azure.co
 
 # Create the SQLAlchemy engine
 engine = create_engine(
-    DATABASE_URL
+    DATABASE_URL, echo=True
 )
 
 # Create a configured "Session" class
