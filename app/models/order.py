@@ -4,10 +4,10 @@ from app.database.connection import Base
 class Order(Base):
     __tablename__ = "orders"
 
-    id = Column(Integer, autoincrement=True, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     date = Column(String)
-    farmer_id = Column(Integer, ForeignKey("farmers.id"), index=True)
-    dealer_id = Column(Integer, ForeignKey("dealers.id"), index=True, nullable=True)
+    farmer_id = Column(String, ForeignKey("farmers.id"), index=True)
+    dealer_id = Column(String, ForeignKey("dealers.id"), index=True, nullable=True)
     type = Column(String)
     quantity = Column(Integer)
     picture = Column(String)

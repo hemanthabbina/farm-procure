@@ -2,10 +2,10 @@ from typing import Optional
 from pydantic import BaseModel, validator
 
 class OrderSchema(BaseModel):
-    id: int
+    id: str
     date: str
-    farmer_id: int
-    dealer_id: Optional[int] = None
+    farmer_id: str
+    dealer_id: Optional[str] = None
     type: str
     quantity: int
     picture: str

@@ -4,7 +4,7 @@ from app.database.connection import Base
 class Dealer(Base):
     __tablename__ = "dealers"
 
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     name = Column(String, index=True)
     mobile = Column(String)
 

@@ -4,19 +4,23 @@ from fastapi import HTTPException
 from app.models.farmer import Farmer
 from app.schemas.farmer import FarmerSchema
 
-def get_farmer(db: Session, farmer_id: int):
+def get_farmer(db: Session, farmer_id: str):
     return db.query(Farmer).filter(Farmer.id == farmer_id).first()
 
 def create_farmer(db: Session, farmer: FarmerSchema):
+    print("Creat farmer")
     db_farmer = Farmer(name=farmer.name, mobile=farmer.mobile, street = farmer.street,
                         village = farmer.village, mandal = farmer.mandal, district = farmer.district,
                         state = farmer.state, country = farmer.country, pincode = farmer.pincode )
+    print("Created farmer")
+    db_farmer.id = str(uuid.uuid4())
+    print(db_farmer.id)
     db.add(db_farmer)
     db.commit()
     db.refresh(db_farmer)
     return db_farmer
 
-def update_farmer(db: Session, farmer_id: int, farmer: FarmerSchema):
+def update_farmer(db: Session, farmer_id: str, farmer: FarmerSchema):
     db_farmer = get_farmer(db, farmer_id)
     if not db_farmer:
         raise HTTPException(status_code=404, detail="Farmer not found")
@@ -33,7 +37,7 @@ def update_farmer(db: Session, farmer_id: int, farmer: FarmerSchema):
     db.refresh(db_farmer)
     return db_farmer
 
-def delete_farmer(db: Session, farmer_id: int):
+def delete_farmer(db: Session, farmer_id: str):
     db_farmer = get_farmer(db, farmer_id)
     if not db_farmer:
         raise HTTPException(status_code=404, detail="Farmer not found")
