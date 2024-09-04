@@ -7,7 +7,7 @@ class Order(Base):
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     date = Column(String)
     farmer_id = Column(Integer, ForeignKey("farmers.id"), index=True)
-    dealer_id = Column(Integer, ForeignKey("dealers.id"), index=True)
+    dealer_id = Column(Integer, ForeignKey("dealers.id"), index=True, nullable=True)
     type = Column(String)
     quantity = Column(Integer)
     picture = Column(String)

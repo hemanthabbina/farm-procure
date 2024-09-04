@@ -1,4 +1,4 @@
-from sqlalchemy import any_
+from sqlalchemy import and_, any_
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app.models.dealer import Dealer
@@ -21,11 +21,13 @@ def get_dealers_orders(db: Session, dealer_id: int):
   #  assignment_list = list(Dealer.assignments).options(load_only("id")).\
   #  print(assignment_list)
  #   return db.query(Farmer, Order, Dealer).filter(Order.farmer_id == Farmer.id).filter(Farmer.pincode == assignment_list.index[0])
-    return db.query(Order).join(Farmer).join(Dealer).filter(Dealer.id == dealer_id).filter(Order.farmer_id == Farmer.id).filter(Farmer.pincode == any_(Dealer.assignments))
+    farmerIds = db.query(Farmer.id).join(Dealer, onclause=and_(Dealer.id == dealer_id, Farmer.pincode == any_(Dealer.assignments)))
+    return db.query(Order).filter(Order.farmer_id == any_(farmerIds))
 
 
 def create_order(db: Session, order: OrderSchema):
-    db_order = Order(farmer_id=order.farmer_id, dealer_id= order.dealer_id, date=order.date, type=order.type, quantity=order.quantity, picture=order.picture, price=order.price, status=order.status)
+    print("HERE")
+    db_order = Order(farmer_id=order.farmer_id, dealer_id = None, date=order.date, type=order.type, quantity=order.quantity, picture=order.picture, price=order.price, status=order.status)
     db.add(db_order)
     db.commit()
     db.refresh(db_order)
