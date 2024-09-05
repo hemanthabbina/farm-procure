@@ -9,7 +9,7 @@ def get_bankaccount(db: Session, bankaccount_id: str):
 
 def create_bankaccount(db: Session, bankaccount: BankAccountSchema):
     db_bankaccount = BankAccount(farmer_id=bankaccount.farmer_id, bank_name=bankaccount.bank_name, branch=bankaccount.branch, account_number= bankaccount.account_number,ifsc_code=bankaccount.ifsc_code)
-    db_bankaccount.id = uuid4()
+    db_bankaccount.id = str(uuid4())
     db.add(db_bankaccount)
     db.commit()
     db.refresh(db_bankaccount)

@@ -1,5 +1,6 @@
 from sqlalchemy import ARRAY, Column, Integer, String
 from app.database.connection import Base
+from sqlalchemy.orm import relationship
 
 class Dealer(Base):
     __tablename__ = "dealers"
@@ -17,3 +18,4 @@ class Dealer(Base):
     pincode = Column(String)
 
     assignments = Column(ARRAY(String))
+

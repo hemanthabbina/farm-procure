@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from app.database.connection import Base
+from sqlalchemy.orm import relationship
 
 
 class Farmer(Base):
@@ -16,4 +17,6 @@ class Farmer(Base):
     state = Column(String)
     country = Column(String)
     pincode = Column(String)
+
+    orders = relationship('Order', back_populates='farmer')
 

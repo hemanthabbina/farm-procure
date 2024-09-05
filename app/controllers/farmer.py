@@ -1,11 +1,23 @@
+from typing import List
 import uuid
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app.models.farmer import Farmer
+from app.schemas.assignments import Assignment
 from app.schemas.farmer import FarmerSchema
+from sqlalchemy import any_, func
 
 def get_farmer(db: Session, farmer_id: str):
     return db.query(Farmer).filter(Farmer.id == farmer_id).first()
+
+
+def get_farmers_by_pincode(db: Session, assignments: list):
+    result = db.query(Farmer.pincode, func.count(Farmer.id)).filter(Farmer.pincode == any_(assignments)).group_by(Farmer.pincode).all()
+    for pincode, farmer_count in result:
+        print(f"Pincode: {pincode}, Farmer Count: {farmer_count}")
+
+    aggregated_results = [Assignment(pincode=pincode, farmer_count= farmer_count) for pincode, farmer_count in result]
+    return aggregated_results
 
 def create_farmer(db: Session, farmer: FarmerSchema):
     print("Creat farmer")
