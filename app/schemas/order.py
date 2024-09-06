@@ -34,3 +34,14 @@ class CreateOrderSchema(BaseModel):
     class Config:
         orm_mode = True
 
+
+class UpdateOrderSchema(BaseModel):
+    id: str
+    dealer_id: Optional[str] = None
+    quantity: int
+    price: int
+    status: str
+
+    class Config:
+        orm_mode = True
+

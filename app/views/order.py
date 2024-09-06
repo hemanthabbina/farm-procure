@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
-from app.schemas.order import CreateOrderSchema, OrderSchema
+from app.schemas.order import CreateOrderSchema, OrderSchema, UpdateOrderSchema
 from app.controllers import order as order_controller
 from fastapi_pagination import Page, add_pagination, paginate
 
@@ -34,6 +34,11 @@ def read_order(order_id: str, db: Session = Depends(get_db)):
 @router.put("/{order_id}", response_model=OrderSchema)
 def update_order_view(order_id: str, order: OrderSchema, db: Session = Depends(get_db)):
     return order_controller.update_order(db=db, order_id=order_id, order=order)
+
+@router.put("/{order_id}/mini", response_model=UpdateOrderSchema)
+def update_order_view(order_id: str, order: UpdateOrderSchema, db: Session = Depends(get_db)):
+    return order_controller.update_order_mini(db=db, order_id=order_id, order=order)
+
 
 @router.delete("/{order_id}")
 def delete_order_view(order_id: str, db: Session = Depends(get_db)):
