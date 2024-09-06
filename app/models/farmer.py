@@ -18,5 +18,4 @@ class Farmer(Base):
     country = Column(String)
     pincode = Column(String)
 
-    orders = relationship('Order', back_populates='farmer')
 

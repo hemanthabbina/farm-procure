@@ -7,6 +7,8 @@ from app.schemas.order import CreateOrderSchema, OrderSchema, UpdateOrderSchema
 from app.controllers import order as order_controller
 from fastapi_pagination import Page, add_pagination, paginate
 
+from app.schemas.summary import SummarySchema
+
 router = APIRouter()
 
 @router.post("/", response_model=OrderSchema)
@@ -23,6 +25,10 @@ def list_all_orders(farmer_id: str, db: Session = Depends(get_db)):
 @router.get("/dealer/{dealer_id}", response_model=List[OrderSchema]) 
 def list_all_orders(dealer_id: str, db: Session = Depends(get_db)):
     return order_controller.get_dealers_orders(db=db, dealer_id=dealer_id)
+
+@router.get("/dealer/{dealer_id}/summary", response_model=List[SummarySchema]) 
+def list_all_orders(dealer_id: str, db: Session = Depends(get_db)):
+    return order_controller.get_dealers_orders_summary(db=db, dealer_id=dealer_id)
 
 @router.get("/{order_id}", response_model=OrderSchema)
 def read_order(order_id: str, db: Session = Depends(get_db)):
