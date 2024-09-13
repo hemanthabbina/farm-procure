@@ -20,17 +20,33 @@ def get_farmers_by_pincode(db: Session, assignments: list):
     return aggregated_results
 
 def create_farmer(db: Session, farmer: FarmerSchema):
-    print("Creat farmer")
-    db_farmer = Farmer(name=farmer.name, mobile=farmer.mobile, street = farmer.street,
-                        village = farmer.village, mandal = farmer.mandal, district = farmer.district,
-                        state = farmer.state, country = farmer.country, pincode = farmer.pincode )
-    print("Created farmer")
-    db_farmer.id = str(uuid.uuid4())
-    print(db_farmer.id)
-    db.add(db_farmer)
-    db.commit()
-    db.refresh(db_farmer)
-    return db_farmer
+    existing_farmer = get_farmer(db, farmer.id)
+    if existing_farmer:
+        existing_farmer.name = farmer.name
+        existing_farmer.mobile = farmer.mobile
+        existing_farmer.street = farmer.street
+        existing_farmer.village = farmer.village
+        existing_farmer.mandal = farmer.mandal
+        existing_farmer.district = farmer.district
+        existing_farmer.state = farmer.state
+        existing_farmer.country = farmer.country
+        existing_farmer.pincode = farmer.pincode
+        db.add(existing_farmer)
+        db.commit()
+        db.refresh(existing_farmer)
+        return existing_farmer
+    else:
+        print("Creat farmer")
+        db_farmer = Farmer(name=farmer.name, mobile=farmer.mobile, street = farmer.street,
+                            village = farmer.village, mandal = farmer.mandal, district = farmer.district,
+                            state = farmer.state, country = farmer.country, pincode = farmer.pincode )
+        print("Created farmer")
+        db_farmer.id = str(uuid.uuid4())
+        print(db_farmer.id)
+        db.add(db_farmer)
+        db.commit()
+        db.refresh(db_farmer)
+        return db_farmer
 
 def update_farmer(db: Session, farmer_id: str, farmer: FarmerSchema):
     db_farmer = get_farmer(db, farmer_id)
